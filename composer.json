@@ -22,7 +22,7 @@
     "require": {
         "php":                             ">=5.3.3",
 
-        "symfony/framework-bundle":        "~2.3",
+        "symfony/framework-bundle":        "^3.0",
         "stof/doctrine-extensions-bundle": "^1.1.0",
         "sylius/resource-bundle":          "0.10.*@dev",
         "sylius/money-bundle":             "0.10.*@dev",
@@ -30,8 +30,8 @@
     },
     "require-dev": {
         "phpspec/phpspec":   "~2.0",
-        "symfony/form":      "~2.3",
-        "symfony/validator": "~2.3"
+        "symfony/form":      "^3.0",
+        "symfony/validator": "^3.0"
     },
     "config": {
         "bin-dir": "bin"

@@ -11,7 +11,9 @@
 
 namespace Sylius\Bundle\ShippingBundle\Form\Type\Calculator;
 
+use Sylius\Bundle\MoneyBundle\Form\Type\MoneyType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -47,21 +49,21 @@ class FlexibleRateConfigurationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('first_item_cost', 'sylius_money', array(
+            ->add('first_item_cost', MoneyType::class, array(
                 'label' => 'sylius.form.shipping_calculator.flexible_rate_configuration.first_item_cost',
                 'constraints' => array(
                     new NotBlank(),
                     new Type(array('type' => 'numeric')),
                 )
             ))
-            ->add('additional_item_cost', 'sylius_money', array(
+            ->add('additional_item_cost', MoneyType::class, array(
                 'label' => 'sylius.form.shipping_calculator.flexible_rate_configuration.additional_item_cost',
                 'constraints' => array(
                     new NotBlank(),
                     new Type(array('type' => 'numeric')),
                 )
             ))
-            ->add('additional_item_limit', 'integer', array(
+            ->add('additional_item_limit', IntegerType::class, array(
                 'required' => false,
                 'label' => 'sylius.form.shipping_calculator.flexible_rate_configuration.additional_item_limit',
                 'constraints' => array(
@@ -87,8 +89,16 @@ class FlexibleRateConfigurationType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'sylius_shipping_calculator_flexible_rate_configuration';
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

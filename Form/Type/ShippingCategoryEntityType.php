@@ -11,6 +11,8 @@
 
 namespace Sylius\Bundle\ShippingBundle\Form\Type;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
 /**
  * Shipping category choice type for "doctrine/orm" driver.
  *
@@ -23,6 +25,6 @@ class ShippingCategoryEntityType extends ShippingCategoryChoiceType
      */
     public function getParent()
     {
-        return 'entity';
+        return EntityType::class;
     }
 }

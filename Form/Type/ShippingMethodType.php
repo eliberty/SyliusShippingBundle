@@ -16,6 +16,9 @@ use Sylius\Component\Shipping\Calculator\Registry\CalculatorRegistryInterface;
 use Sylius\Component\Shipping\Checker\Registry\RuleCheckerRegistryInterface;
 use Sylius\Component\Shipping\Model\ShippingMethod;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -79,10 +82,10 @@ class ShippingMethodType extends AbstractType
     {
         $builder
             ->addEventSubscriber(new BuildShippingMethodFormListener($this->calculatorRegistry, $builder->getFormFactory()))
-            ->add('name', 'text', array(
+            ->add('name', TextType::class, array(
                 'label' => 'sylius.form.shipping_method.name'
             ))
-            ->add('enabled', 'checkbox', array(
+            ->add('enabled', CheckboxType::class, array(
                 'required' => false,
                 'label'    => 'sylius.form.shipping_method.enabled'
             ))
@@ -90,7 +93,7 @@ class ShippingMethodType extends AbstractType
                 'required' => false,
                 'label'    => 'sylius.form.shipping_method.category'
             ))
-            ->add('categoryRequirement', 'choice', array(
+            ->add('categoryRequirement', ChoiceType::class, array(
                 'choices'  => ShippingMethod::getCategoryRequirementLabels(),
                 'multiple' => false,
                 'expanded' => true,
@@ -146,8 +149,16 @@ class ShippingMethodType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'sylius_shipping_method';
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

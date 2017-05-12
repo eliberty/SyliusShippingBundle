@@ -13,6 +13,7 @@ namespace Sylius\Bundle\ShippingBundle\Form\Type;
 
 use Sylius\Component\Shipping\Model\ShipmentInterface;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
@@ -51,7 +52,7 @@ class ShipmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('state', 'choice', array(
+            ->add('state', ChoiceType::class, array(
                 'label'   => 'sylius.form.shipment.state',
                 'choices' => array(
                     ShipmentInterface::STATE_CHECKOUT   => 'sylius.form.shipment.states.checkout',
@@ -84,8 +85,16 @@ class ShipmentType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'sylius_shipment';
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }
